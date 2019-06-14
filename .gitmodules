@@ -89,9 +89,6 @@
 [submodule "bundle/vim-rhubarb"]
 	path = bundle/vim-rhubarb
 	url = git@github.com:tpope/vim-rhubarb
-[submodule "bundle/bundle/csv"]
-	path = bundle/bundle/csv
-	url = https://github.com/chrisbra/csv.vim
 [submodule "bundle/csv"]
 	path = bundle/csv
 	url = https://github.com/chrisbra/csv.vim
