@@ -52,18 +52,47 @@ let s:git_status_dictionary = {
             \ }
 
 function! s:get_diff_files(rev)
-  let list = map(split(system(
-              \ 'git diff --name-status '.a:rev), '\n'),
-              \ '{"filename":matchstr(v:val, "\\S\\+$"),"text":s:git_status_dictionary[matchstr(v:val, "^\\w")]}'
-              \ )
-  call setqflist(list)
-  copen
+    let g:current_commit = a:rev
+    let git_path = substitute(system('git rev-parse --show-toplevel'), '\n', '','').'/'
+    let file_lit = split(system('git diff --name-status '.a:rev), '\n')
+    let list = map(file_lit,
+        \ '{"filename":matchstr(v:val, "\\S\\+$"),"text":s:git_status_dictionary[matchstr(v:val, "^\\w")]}'
+        \ )
+    let new_list = []
+    for item in list
+        call add(new_list, {"filename": git_path . item['filename'], "text": item['text'] })
+    endfor
+    call setqflist(new_list)
+    copen
 endfunction
 
-command! -nargs=1 DiffRev call s:get_diff_files(<q-args>0)
+command! -nargs=1 DiffRev call s:get_diff_files(<q-args>)
 
-function! s:set_font(font_size)
-    call rpcnotify(1, 'Gui', 'Font', 'Iosevka '.a:font_size)
-endfunction
-command! -nargs=1 SetFont call s:set_font(<q-args>)
-command! -nargs=0 ResetFont call s:set_font(9)
+" nnoremap <silent> <leader>gm :tab split<CR>:DiffRev develop<CR>
+" nnoremap <silent> <leader> gm :call g:DiffNextLoc(g:current_commit)<CR>
+" nnoremap <silent> <leader> gM :call g:DiffPrevLoc(g:current_commit)<CR>
+
+" " command! Glistmod only | call g:ListModified() | Gdiff
+" " function! g:ListModified()
+" " 	let old_makeprg=&makeprg
+" " 	let old_errorformat=&errorformat
+" " 	let &makeprg = "git ls-files -m"
+" " 	let &errorformat="%f"
+" " 	lmake
+" " 	let &makeprg=old_makeprg
+" " 	let &errorformat=old_errorformat
+" " endfunction
+
+" function! g:DiffNextLoc(rev)
+" 	windo set nodiff
+" 	only
+" 	lnext
+" 	Gdiff a:rev
+" endfunction
+
+" function! g:DiffPrevLoc(rev)
+" 	windo set nodiff
+" 	only
+" 	lprevious
+" 	Gdiff a:rev
+" endfunction

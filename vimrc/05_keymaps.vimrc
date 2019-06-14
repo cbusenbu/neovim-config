@@ -100,3 +100,7 @@ imap <expr> <CR> pumvisible() ? "\<C-y>" : "<Plug>delimitMateCR"
 map <Leader>si :call LaunchIPython()<CR>
 map <Leader>sr :call SendToTerminal()<CR>
 map <Leader>ss :call SendNudgeToTerminal()<CR>
+
+" nnoremap  <leader>gy :tab split <CR> :Greview<CR>
+" nnoremap  <leader>gn :call g:DiffNextLoc()<CR>
+" nnoremap  <leader>gN :call g:DiffPrevLoc()<CR>
