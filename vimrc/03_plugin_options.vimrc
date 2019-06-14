@@ -51,10 +51,10 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 autocmd! QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
 
 " Auto-close QuickFix a little while after AsyncRun finishes
-function! DelayedCloseQuickFix(timer)
-  silent exe "normal! :cclose\n"
-endfunction
-let g:asyncrun_exit = "call timer_start(4200, 'DelayedCloseQuickFix')"
+" function! DelayedCloseQuickFix(timer)
+"   silent exe "normal! :cclose\n"
+" endfunction
+" let g:asyncrun_exit = "call timer_start(4200, 'DelayedCloseQuickFix')"
 
 " Customize ArgWrap by filetype
 autocmd! FileType python let b:argwrap_tail_comma=1
@@ -132,3 +132,15 @@ let g:lightline = {
   \   'winnr': 'LightlineWinnr'
   \ },
   \ }
+
+"""""""""""""""""""""""""
+"" rhubarb.vim config""""
+"""""""""""""""""""""""""
+
+let g:github_enterprise_urls = ['https://indy-github.milliman.com']
+
+"""""""""""""""""""""""""
+""sneak.vim config"""""""
+"""""""""""""""""""""""""
+let g:sneak#label = 1
+
